@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="999fa534-ab73-4ad5-be4d-53c40510e2e4" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<jms:config name="JMS_Config1" doc:name="JMS Config" doc:id="9283c1f3-0a22-499d-a60d-c78a58092552" >
+		<jms:active-mq-connection username="admin" password="admin" clientId="http://localhost:8161/">
+		</jms:active-mq-connection>
+	</jms:config>
+	<flow name="jmsFlow" doc:id="748d35e8-2a75-4783-bc2d-5cc3f7bb3866" >
+		<http:listener doc:name="Listener" doc:id="39fc08d3-c7d7-4af2-b83f-a1fb92c5eb3d" config-ref="HTTP_Listener_config" path="jms"/>
+		<jms:publish doc:name="Publish" doc:id="ba4ed04c-0bb4-4168-a048-bd298c8f7453" config-ref="JMS_Config1" destination="mannan"/>
+	</flow>
+</mule>
